@@ -29,7 +29,7 @@ out/main.tex: main.md
 	pandoc \
 	  --from markdown-auto_identifiers \
 	  --to beamer \
-	  --slide-level=2 \
+	  --slide-level=3 \
 	  --standalone \
 	  --listings \
 	  $< \
