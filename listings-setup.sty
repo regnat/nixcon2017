@@ -1,0 +1,40 @@
+\definecolor{lstbg}{rgb}{0, 0, 0.3}
+\definecolor{lsttype}{rgb}{0.5,0,0}
+\definecolor{lstanswer}{rgb}{0, 0.5, 0}
+
+\lstdefinelanguage{NLight}{%
+  morekeywords={let,in,if,then,else,or,Cons,Nil},
+  otherkeywords={:,;,=,[,],\{,\},..}, % operators go here
+  morekeywords={[2]Int,true,false,Bool,String,t, Empty, Any},   % types go here
+  literate={% replace strings with symbols
+    {->}{{$\to$}}{1}
+    {λ}{{$\lambda$}}{1}
+    {τ}{{\ensuremath{\tau}}}{1}
+    {ρ}{{\ensuremath{\rho}}}{1}
+    {'a}{{\ensuremath{\alpha}}}{1}
+    {'b}{{\ensuremath{\beta}}}{1}
+    {tin}{{$\in$}}{1}
+    {AND}{{$\wedge$}}{1}
+    {OR}{{$\vee$}}{1}
+    {LB}{{\{}}{1}
+    {RB}{{\}}}{1}
+    {...}{{$\cdots$}}{1}
+    {DOLLAR}{{\$}}{1}
+    {(|}{{\ensuremath{\llbracket}}}{1} % chktex 9
+    {|)}{{\ensuremath{\rrbracket}}}{1} % chktex 9
+    {(||}{{\ensuremath{\llparenthesis}}}{1} % chktex 9
+    {||)}{{\ensuremath{\rrparenthesis}}}{1} % chktex 9
+  },
+  keepspaces,
+  morecomment=[s]{/*}{*/},
+  moredelim=**[s][\color{lsttype}]{/*:}{*/},
+  moredelim=**[l][\color{lstanswer}]{»},
+  mathescape % optional
+}[keywords,comments,strings]
+\lstset{%
+  escapeinside={(*}{*)},
+  breaklines=true,
+  mathescape=true,
+  language=NLight,
+  basicstyle=\color{lstbg}
+}
