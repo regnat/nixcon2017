@@ -101,3 +101,81 @@ in f
 \end{lstlisting}
 
 # What
+
+## Base type-system
+
+### Base stuff
+
+```nix
+let
+  f /*: (Int $\to$ Int $\to$ Int) $\wedge$ (Bool $\to$ Bool $\to$ Bool) */
+    = x: y: if isInt x then x + y else x && y;
+in f
+```
+
+```nix
+x /*: Int */:
+  if x > 0
+  then x-1
+  else false
+```
+
+. . .
+
+```
+» Int -> (Int OR false)
+```
+
+## Data-structures
+
+### Lists
+
+#### Regular expression lists
+
+```
+[ 1 2 true ] /*: [ Int* true "bar"# ] */
+[ true "bar" ] /*: [ Int* true "bar"# ] */
+```
+
+### Records − General form
+
+#### Syntax of record types
+
+```
+{ $x_1$ $\approx$ $\tau_1$; …; $x_n$ $\approx$ $\tau_n$; _ =? $\tau$ }
+```
+
+Where `$\approx$` is `=` or `=?`
+
+#### Syntactic sugar
+
+- we can omitt `_ =? Empty` 
+- we can replace `_ =? Any` by `..`
+
+### Static records
+
+```
+{ x = 1; y = false; z = "foo" }
+```
+
+. . .
+
+```
+» { x = 1; y = false; z = "foo" }
+```
+
+### Dynamic records
+
+```
+let
+  myFunction /*: Int -> String */ = …;
+  x = getEnv "Foo";
+in
+{ DOLLAR{x} = 1; DOLLAR{myFunction 2} = true }
+```
+
+. . .
+
+```
+» { _ =? 1 OR true }
+```
