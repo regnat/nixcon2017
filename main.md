@@ -69,10 +69,8 @@ in f
 
 IMAGE
 
-## Set-theory to the rescue (2)
-
-#### We can do the same with types
-\inlinetex{\tiny (more or less)}
+### We can do the same with types
+\inlinetex{{\tiny (more or less)}}
 
 - Union `$\cup$` → `$\vee$`
 - Intersection `$\cap$` → `$\wedge$`
