@@ -14,11 +14,19 @@ header-includes:
 
 # Why
 
-## Nix origins
+### Motivation
+
+#### At the very begining…
 
 > Nix won't be complete until it has static typing^[Eelco Dolstra]
 
-### Why it is hard
+#### Maintenance needs
+
+- `nixpkgs`: 1M sloc
+
+- Errors hard to spot
+
+### Why isn't it done yet
 
 ```nix
 lst:
