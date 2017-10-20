@@ -106,6 +106,58 @@ in f
   let x (*\only<2>{\color{lsttype}/*: ? */ }*)= getEnv "X"; in {y = 1}.DOLLAR{x}
 \end{lstlisting}
 
+## Bidirectional typing
+
+### Type-inference too hard to do
+
+```
+x (*\only<2->{\color{lsttype}/*: \textbf{Int} */ }*): x+1
+» (*\color{lstanswer}\textbf{\only<1>{?}\only<2->{Int}}*) -> Int
+```
+
+\def\iob{\textbf{Int} $\vee$ \textbf{Bool}}
+```
+x (*\only<3->{\color{lsttype}/*: \iob */ }*):
+  if isInt x then -x else not x
+» (*\color{lstanswer}\only<-2>{\textbf{?}}\only<3->{\iob}*) -> (Int OR Bool)
+```
+
+### Checking to the rescue
+
+```
+let f /*: (Int -> Int) AND (Bool -> Bool) */
+  = x: if isInt x then -x else not x;
+in f
+» (Int -> Int) AND (Bool -> Bool)
+```
+
+### More power!
+
+\def\intersIB{%
+  \def\Bool{\textbf{Bool}}%
+  \def\Int{\textbf{Int}}%
+  \def\ra{\ensuremath{\to}}
+  \Bool{} \ra{} \Bool{} \ra{} \Bool{} $\wedge$ \Int{} \ra{} \Int{} \ra{} \Int}
+
+```
+let f = (*\only<2->{\color{lsttype}/*: \intersIB{} */}*)
+  x: y:
+    if isInt x then x+y else x && y;
+in f
+» (*\color{lstanswer}\only<1>{? $\to$ ? $\to$ (\textbf{Int} $\vee$ \textbf{Bool})}%
+    \only<2->{\intersIB{}}*)
+```
+
+### More precision
+
+```
+let f /*: Int -> Bool */ = x: (y: y) x; in f
+```
+
+- Without bidirectional typing: typechecs
+
+- With bidirectional typing: type error
+
 # What
 
 ## Base type-system
