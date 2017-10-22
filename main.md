@@ -68,27 +68,18 @@ in f
 ### Set-theory to the rescue (1)
 
 \begin{center}
-\begin{tikzpicture}[y=0.80pt,x=0.80pt,yscale=-1, inner sep=0pt, outer sep=0pt]
+\begin{tikzpicture}
   \Huge
-  \path[draw=c55ff55,fill=c55ff55,miter limit=4.00,fill opacity=0.392,line
-    width=1.200pt] (269.6443,148.2101) ellipse (2.8222cm and 1.6933cm);
-  \path[draw=cff5555,fill=cff5555,miter limit=4.00,fill opacity=0.392,line
-    width=1.200pt] (150.3557,148.7899) ellipse (2.8222cm and 1.6933cm);
-  \path[fill=black,line width=0.212pt] (158.1275,148.21013) node[above right]
-    (text5084) {};
-  \path[fill=black,line width=0.212pt] (149.64432,148.21013) node[above right]
-    (text5088) {};
-  \path[fill=black,line width=0.212pt] (130.93544,160) node[above right]
-    (text5092) {A};
-  \path[fill=black,line width=0.212pt] (292.36221,160) node[above left]
-    (text5096) {B};
+  \path[draw=c55ff55,fill=c55ff55,miter limit=4.00,fill opacity=0.392]
+    (0,0) ellipse (3 and 2);
+  \path[draw=cff5555,fill=cff5555,miter limit=4.00,fill opacity=0.392]
+    (3,0) ellipse (3 and 2);
+  \path (-1,0) node {A};
+  \path (4,0) node {B};
 
-  \only<2>{
-    \path[fill=black,line width=0.212pt] (62.756035,72.271248) node[above right]
-      (text5092) {A$\cap$B};
-    \path[->,draw=black,line join=miter,line cap=butt,miter limit=4.00,line
-      width=1.600pt] (129.9500,66.0631) -- (204.8883,149.3123);
-  }
+    \path (-1,-4) node (dummy) {};
+    \path<2-> (-1,-3) node (ACAPB) {A$\cap$B};
+    \path[->,line width=2]<2-> (ACAPB) edge (1,-1);
 \end{tikzpicture}
 \end{center}
 
