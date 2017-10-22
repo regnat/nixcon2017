@@ -67,7 +67,30 @@ in f
 
 ### Set-theory to the rescue (1)
 
-IMAGE
+\begin{center}
+\begin{tikzpicture}[y=0.80pt,x=0.80pt,yscale=-1, inner sep=0pt, outer sep=0pt]
+  \Huge
+  \path[draw=c55ff55,fill=c55ff55,miter limit=4.00,fill opacity=0.392,line
+    width=1.200pt] (269.6443,148.2101) ellipse (2.8222cm and 1.6933cm);
+  \path[draw=cff5555,fill=cff5555,miter limit=4.00,fill opacity=0.392,line
+    width=1.200pt] (150.3557,148.7899) ellipse (2.8222cm and 1.6933cm);
+  \path[fill=black,line width=0.212pt] (158.1275,148.21013) node[above right]
+    (text5084) {};
+  \path[fill=black,line width=0.212pt] (149.64432,148.21013) node[above right]
+    (text5088) {};
+  \path[fill=black,line width=0.212pt] (130.93544,160) node[above right]
+    (text5092) {A};
+  \path[fill=black,line width=0.212pt] (292.36221,160) node[above left]
+    (text5096) {B};
+
+  \only<2>{
+    \path[fill=black,line width=0.212pt] (62.756035,72.271248) node[above right]
+      (text5092) {A$\cap$B};
+    \path[->,draw=black,line join=miter,line cap=butt,miter limit=4.00,line
+      width=1.600pt] (129.9500,66.0631) -- (204.8883,149.3123);
+  }
+\end{tikzpicture}
+\end{center}
 
 ### We can do the same with types
 \inlinetex{{\tiny (more or less)}}
