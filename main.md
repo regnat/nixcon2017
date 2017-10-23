@@ -10,6 +10,9 @@ header-includes:
 - \usepackage{beamer-setup}
 - \usepackage{aliases}
 - \newcommand{\inlinetex}[1]{#1}
+- \usepackage{tikz}
+- \definecolor{c55ff55}{RGB}{85,255,85}
+- \definecolor{cff5555}{RGB}{255,85,85}
 ---
 
 # Why
@@ -251,3 +254,35 @@ in
 ```
 » { _ =? 1 OR true }
 ```
+
+## Extensible system
+
+### Possible modulations on the type-system {-}
+
+```
+{
+  DOLLAR{e1} = 1;
+  DOLLAR{e2} = 2;
+}
+```
+
+→ Do we want to allow this?
+
+### Gradual type sometimes unwanted
+
+`(x: x)` is basically an unsafe cast
+
+→ We would sometimes like to have more guaranties
+
+- Don't automatically add gradual types everywhere
+
+- Disable the gradual type
+
+### Annotations to control the type-system {-}
+
+```
+((x: x) 1) (*\only<2->{\color{blue}/*\# strict-mode */} *)/*: Bool */
+```
+
+\only<1>{Typechecks}
+\only<2>{Error}
