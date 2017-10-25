@@ -69,7 +69,7 @@ in f
 
 `Int -> Int -> Int`, but also `Bool -> Bool -> Bool`
 
-### Set-theory to the rescue (1)
+### Set-theory to the rescue
 
 \begin{center}
 \begin{tikzpicture}
@@ -164,15 +164,6 @@ x (*\only<3->{\color{lsttype}/*: \iob */ }*):
 \end{center}
 
 ### Checking to the rescue
-
-```
-let f /*: (Int -> Int) AND (Bool -> Bool) */
-  = x: if isInt x then -x else not x;
-in f
-» (Int -> Int) AND (Bool -> Bool)
-```
-
-### More power!
 
 \def\intersIB{%
   \def\Bool{\textbf{Bool}}%
