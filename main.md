@@ -207,7 +207,8 @@ let f /*: Int -> Bool */ = x: (y: y) x; in f
 
 ```nix
 let
-  f /*: (Int $\to$ Int $\to$ Int) $\wedge$ (Bool $\to$ Bool $\to$ Bool) */
+  f /*: (Int -> Int -> Int)
+      AND (Bool -> Bool -> Bool) */
     = x: y: if isInt x then x + y else x && y;
 in f
 ```
@@ -234,6 +235,12 @@ x /*: Int */:
 ```
 [ 1 2 true ] /*: [ Int* true "bar"# ] */
 [ true "bar" ] /*: [ Int* true "bar"# ] */
+```
+
+. . .
+
+```
+[ Int Bool ] $\approx$ (Int, Bool)
 ```
 
 ### Records − General form
@@ -300,13 +307,56 @@ in
 
 - Don't automatically add gradual types everywhere
 
-- Disable the gradual type
+- Or even disable the gradual type
 
-### Annotations to control the type-system {-}
+### Strict mode {-}
+
+#### Gradual type
 
 ```
 ((x: x) 1) (*\only<2->{\color{blue}/*\# strict-mode */} *)/*: Bool */
 ```
 
 \only<1>{Typechecks}
+\only<2->{Error}
+
+. . .
+
+. . .
+
+#### Records definition
+
+```
+let
+  x = getEnv "FOO";
+  y = getEnv "BAR";
+in
+{ DOLLAR{x} = 1; DOLLAR{y} = 2; } (*\only<4->{\color{blue}/*\# strict-mode */} *)
+```
+
+\only<3>{Typechecks}
+\only<4->{Error}
+
+### Control of the gradual type
+
+```
+let
+  cast = x: x;
+in
+(*\only<3->{(from\_gradual }*)(cast (*\only<3->{(to\_gradual }*)1(*\only<3->{))}*))
+  (*\only<2->{\color{blue}/*\# no-gradual */} *) /*: Bool */
+```
+
+\only<1>{Typechecks}
 \only<2>{Error}
+\only<3->{Typechecks}
+
+### And that's all for today...
+
+#### POC implementation in OCaml
+
+> https://github.com/regnat/tix
+
+#### (Very wip) rewrite in Haskell
+
+> https://github.com/regnat/ptyx
