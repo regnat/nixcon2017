@@ -203,28 +203,11 @@ let f /*: Int -> Bool */ = x: (y: y) x; in f
 
 ## Base type-system
 
-### Base stuff
+- Types in comments in normal nix code
 
-```nix
-let
-  f /*: (Int -> Int -> Int)
-      AND (Bool -> Bool -> Bool) */
-    = x: y: if isInt x then x + y else x && y;
-in f
-```
+- Powerful type-system
 
-```nix
-x /*: Int */:
-  if x > 0
-  then x-1
-  else false
-```
-
-. . .
-
-```
-» Int -> (Int OR false)
-```
+- Lax by default and safe when needed
 
 ## Data-structures
 
@@ -287,17 +270,6 @@ in
 ```
 
 ## Extensible system
-
-### Possible modulations on the type-system {-}
-
-```
-{
-  DOLLAR{e1} = 1;
-  DOLLAR{e2} = 2;
-}
-```
-
-→ Do we want to allow this?
 
 ### Gradual type sometimes unwanted
 
