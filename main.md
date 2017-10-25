@@ -35,7 +35,7 @@ header-includes:
 lst:
   let
     x = head lst;
-    y = head (tail lst);
+    y = elemAt lst 1;
   in
   if isString x
   then y.DOLLAR{x}
