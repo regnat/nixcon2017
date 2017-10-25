@@ -4,7 +4,8 @@
 with import nixpkgs { inherit system; };
 let myTexLive =
   texlive.combine {
-    inherit (texlive) scheme-medium syntax appendix paralist csvsimple dirtree
+    inherit (texlive) scheme-medium syntax appendix paralist csvsimple
+    forest elocalloc environ trimspaces
     biblatex logreq xstring cleveref filehook beamertheme-metropolis pgfopts;
   };
 in

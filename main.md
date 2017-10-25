@@ -11,6 +11,7 @@ header-includes:
 - \usepackage{aliases}
 - \newcommand{\inlinetex}[1]{#1}
 - \usepackage{tikz}
+- \usepackage{forest}
 - \definecolor{c55ff55}{RGB}{85,255,85}
 - \definecolor{cff5555}{RGB}{255,85,85}
 ---
@@ -137,6 +138,30 @@ x (*\only<3->{\color{lsttype}/*: \iob */ }*):
   if isInt x then -x else not x
 » (*\color{lstanswer}\only<-2>{\textbf{?}}\only<3->{\iob}*) -> (Int OR Bool)
 ```
+
+### Enters bidirectional typing {-}
+
+\begin{center}
+\def\redbox{\node [draw,red,inner sep=0,fit to=tree]{}}
+\begin{forest}
+[Lambda,tikz={\only<8,10>{\redbox;}} [x]
+  [Lambda,tikz={\only<7,11>{\redbox;}}  [y]
+    [Apply,tikz={\only<6,12>{\redbox;}}
+      [Apply,tikz={\only<4,14>{\redbox;}}
+        [(+),tikz={\only<2,16>{\redbox;}}] [x,tikz={\only<3,15>{\redbox;}}] ]
+      [y,tikz={\only<5,13>{\redbox;}}]
+    ]
+  ]
+]
+\end{forest}
+
+\only<9->{\lstinline!Int -> Int -> Int!}%
+\only<17>{\color{green}
+\begin{tikzpicture}[remember picture,overlay,shift={(current page.center)},scale=3]
+  \fill(-.5,-.15) -- (-.25,-.5) -- (.5,.2) -- (-.25,-.35) -- cycle;
+\end{tikzpicture}
+}
+\end{center}
 
 ### Checking to the rescue
 
