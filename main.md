@@ -203,6 +203,8 @@ let f /*: Int -> Bool */ = x: (y: y) x; in f
 
 ## Base type-system
 
+### Summary of the features
+
 - Types in comments in normal nix code
 
 - Powerful type-system
