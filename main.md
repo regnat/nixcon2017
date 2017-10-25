@@ -92,7 +92,7 @@ in f
 - Union `$\cup$` → `$\vee$`
 - Intersection `$\cap$` → `$\wedge$`
 - Difference `$\backslash$` → `$\backslash$`
-- Inclusion `$\subset$` → `$\subtype$`
+- Inclusion `$\subseteq$` → `$\subtype$`
 
 ### Back to our example
 
@@ -114,8 +114,7 @@ in f
 
 #### Let's introduce "`?`"
 
-- Meaning: "I don't know what the type of this is, I trust you're only
-  doing sane things with it"
+- Represents unknown types
 
 - Used to type untypeable expressions
 
