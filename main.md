@@ -195,7 +195,7 @@ in f
 let f /*: Int -> Bool */ = x: (y: y) x; in f
 ```
 
-- Without bidirectional typing: typechecs
+- Without bidirectional typing: typechecks
 
 - With bidirectional typing: type error
 
