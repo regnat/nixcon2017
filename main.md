@@ -43,6 +43,10 @@ lst:
   else x + y
 ```
 
+### Impossible to type everything
+
+![nixpkgs loc](img/printscreen-sloc-nixpkgs.png)\ 
+
 # How
 
 ### Requirements
@@ -86,13 +90,13 @@ in f
     \path[->,line width=2]<2-> (ACAPB) edge (1,-1);
 \end{tikzpicture}
 \end{center}
+ 
 
 ### We can do the same with types
 \inlinetex{{\tiny (more or less)}}
 
 - `$\cup,\cap,\backslash,\subseteq$` → `$\vee,\wedge,\backslash,\subtype$`
 - Singleton types `1`, `true`, `"blah"`, …
-- Funkier stuff like interval types `1 -- 83`
 
 ### Back to our example
 
@@ -106,10 +110,6 @@ in f
 
 ## Gradual type
 
-### Impossible to type everything
-
-![nixpkgs loc](img/printscreen-sloc-nixpkgs.png)\ 
-
 ### Gradual type { - }
 
 #### Let's introduce "`?`"
@@ -118,13 +118,13 @@ in f
 
 - Used to type untypeable expressions
 
-\begin{lstlisting}
-  let x (*\only<2>{\color{lsttype}/*: ? */ }*)= getEnv "X"; in {y = 1}.DOLLAR{x}
-\end{lstlisting}
+```
+let x = getEnv "X"; in {y = 1}.DOLLAR{x}
+```
 
 ## Bidirectional typing
 
-### Type-inference too hard to do
+### Inference alone not always enough
 
 ```
 x (*\only<2->{\color{lsttype}/*: \textbf{Int} */ }*): x+1
@@ -138,29 +138,61 @@ x (*\only<3->{\color{lsttype}/*: \iob */ }*):
 » (*\color{lstanswer}\only<-2>{\textbf{?}}\only<3->{\iob}*) -> (Int OR Bool)
 ```
 
-### Enters bidirectional typing {-}
+### Type reconstruction
 
-\begin{center}
-\def\redbox{\node [draw,red,inner sep=0,fit to=tree]{}}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\only<4-7>{\lstinline!$t_x$ = Int!}
+
+\only<6>{\lstinline!$t_y$ = Int!}
+\end{column}
+\begin{column}{0.7\textwidth}
 \begin{forest}
-[Lambda,tikz={\only<8,10>{\redbox;}} [x]
-  [Lambda,tikz={\only<7,11>{\redbox;}}  [y]
-    [Apply,tikz={\only<6,12>{\redbox;}}
-      [Apply,tikz={\only<4,14>{\redbox;}}
-        [(+),tikz={\only<2,16>{\redbox;}}] [x,tikz={\only<3,15>{\redbox;}}] ]
-      [y,tikz={\only<5,13>{\redbox;}}]
+  for tree={fit=rectangle}
+[Lambda,tikz={\only<8>{\redbox{Int -> Int -> Int};}} [x]
+  [Lambda,fit=rectangle,tikz={\only<7>{\redbox{Int -> Int};}}  [y]
+    [Apply,fit=rectangle,tikz={\only<6>{\redbox{Int};}}
+      [Apply,tikz={\only<4-5>{\redbox{Int -> Int};}}
+        [(+),tikz={\only<2-3>{\redbox{Int -> Int -> Int};}}]
+        [x,tikz={\only<3>{\redbox[east][right]{$t_x$};}}] ]
+      [y,tikz={\only<5>{\redbox{$t_y$};}}]
     ]
   ]
 ]
 \end{forest}
+\end{column}
+\end{columns}
 
-\only<9->{\lstinline!Int -> Int -> Int!}%
-\only<17>{\color{green}
+### Type checking
+
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\only<4-10>{\lstinline!$t_x$ = Int!}
+\end{column}
+\begin{column}{0.7\textwidth}
+  \begin{forest}
+  for tree={fit=rectangle}
+  [Lambda [x]
+    [If-then-else
+      [Apply
+        [isInt] \only<6>{\redbox{(Int -> true) AND ($\lnot$Int -> false)}}
+        [x] \only<7>{\redbox{Int}}
+      ] \only<5>{\redbox{??}}\only<8-10>{\redbox{true}}
+      [-x] \only<9>{\bluebox{Int}}
+      [not x] \only<10>{\bluebox(black,fill){}}
+    ] \only<4>{\bluebox{Int}}
+  ] \only<2>{\bluebox{(Int -> Int) AND (Bool -> Bool)}}
+    \only<3>{\bluebox{Int -> Int}}
+    \only<11>{\bluebox{Bool -> Bool}}
+  \end{forest}
+
+\only<12>{\color{green}
 \begin{tikzpicture}[remember picture,overlay,shift={(current page.center)},scale=3]
   \fill(-.5,-.15) -- (-.25,-.5) -- (.5,.2) -- (-.25,-.35) -- cycle;
 \end{tikzpicture}
 }
-\end{center}
+\end{column}
+\end{columns}
 
 ### Checking to the rescue
 
@@ -211,22 +243,7 @@ let f(* \only<2>{\color{lsttype}/*: Int $\to$ Bool */} *) = x (* \only<1>{\color
 [ Int Bool ] $\approx$ (Int, Bool)
 ```
 
-### Records − General form
-
-#### Syntax of record types
-
-```
-{ $x_1$ $\approx$ $\tau_1$; …; $x_n$ $\approx$ $\tau_n$; _ =? $\tau$ }
-```
-
-Where `$\approx$` is `=` or `=?`
-
-#### Syntactic sugar
-
-- we can omitt `_ =? Empty` 
-- we can replace `_ =? Any` by `..`
-
-### Static records
+### Static attribute sets
 
 ```
 { x = 1; y = false; z = "foo" }
@@ -238,7 +255,22 @@ Where `$\approx$` is `=` or `=?`
 » { x = 1; y = false; z = "foo" }
 ```
 
-### Dynamic records
+### More attribute sets
+
+```
+{ x /*: Int */
+, y /*: Int */ ? 1
+, ... }:
+  x + y
+```
+
+. . .
+
+```
+» { x = Int, y =? Int, .. } -> Int
+```
+
+### Dynamic attribute sets
 
 ```
 let

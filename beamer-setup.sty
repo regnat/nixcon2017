@@ -1,8 +1,16 @@
 \usepackage{pgfpages}
 \usepackage{pgfpages-fix}
+\usepackage{xparse}
 % \setbeameroption{show notes on second screen=left}
 \setbeamertemplate{footline}[frame number]
 \setbeamertemplate{section in toc}[square unnumbered]
 \setbeamertemplate{section in toc shaded}[default][50]
+\DeclareDocumentCommand{\redbox}{ O{south} O{below} D(){red} m}{%
+            \node [draw,#3,inner sep=0,fit to=tree] (rect) {};%
+            \node [#2,align=center] at (rect.#1) {\lstinline!#4!};%
+}
+\DeclareDocumentCommand{\bluebox}{ O{south} O{below} D(){blue} m}{%
+  \redbox[#1][#2](#3){#4}%
+}
 
 \AtBeginSection[]{}
