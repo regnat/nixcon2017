@@ -90,10 +90,9 @@ in f
 ### We can do the same with types
 \inlinetex{{\tiny (more or less)}}
 
-- Union `$\cup$` → `$\vee$`
-- Intersection `$\cap$` → `$\wedge$`
-- Difference `$\backslash$` → `$\backslash$`
-- Inclusion `$\subseteq$` → `$\subtype$`
+- `$\cup,\cap,\backslash,\subseteq$` → `$\vee,\wedge,\backslash,\subtype$`
+- Singleton types `1`, `true`, `"blah"`, …
+- Funkier stuff like interval types `1 -- 83`
 
 ### Back to our example
 
@@ -165,30 +164,21 @@ x (*\only<3->{\color{lsttype}/*: \iob */ }*):
 
 ### Checking to the rescue
 
-\def\intersIB{%
-  \def\Bool{\textbf{Bool}}%
-  \def\Int{\textbf{Int}}%
-  \def\ra{\ensuremath{\to}}
-  \Bool{} \ra{} \Bool{} \ra{} \Bool{} $\wedge$ \Int{} \ra{} \Int{} \ra{} \Int}
 
 ```
-let f = (*\only<2->{\color{lsttype}/*: \intersIB{} */}*)
-  x: y:
-    if isInt x then x+y else x && y;
+let f /*: (Int -> Int) AND (Bool -> Bool) */
+  = x: if isInt x then -x else not x;
 in f
-» (*\color{lstanswer}\only<1>{? $\to$ ? $\to$ (\textbf{Int} $\vee$ \textbf{Bool})}%
-    \only<2->{\intersIB{}}*)
+» (Int -> Int) AND (Bool -> Bool)
 ```
 
 ### More precision
 
 ```
-let f /*: Int -> Bool */ = x: (y: y) x; in f
+let f(* \only<2>{\color{lsttype}/*: Int $\to$ Bool */} *) = x (* \only<1>{\color{lsttype}/*: Int */} *): ((y: y) x (*\only<1>{\color{lsttype}/*: Bool*/}*))); in f
 ```
 
-- Without bidirectional typing: typechecks
-
-- With bidirectional typing: type error
+→ \only<1>{Pass}\only<2>{Error}
 
 # What
 
@@ -198,9 +188,11 @@ let f /*: Int -> Bool */ = x: (y: y) x; in f
 
 - Types in comments in normal nix code
 
-- Powerful type-system
+- (Hopefully) powerful enough type-system
 
 - Lax by default and safe when needed
+
+    `x: e` $\Leftrightarrow$ `x /*: ? */: e`
 
 ## Data-structures
 
